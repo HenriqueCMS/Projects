@@ -1,0 +1,98 @@
+import random
+
+# def vencedor (escolha_humana : str , escolha_maquina : str ):
+#     if escolha_humana == "pedra":
+#         if escolha_maquina == "pedra":
+#             vencedor_jogo = "EMPATE"
+#         elif escolha_maquina == "tesoura":
+#             vencedor_jogo = "VOCÊ GANHOU PARABÉNS"
+#         else:
+#             vencedor_jogo = "VOCÊ PERDEU QUE PENA"
+#     elif escolha_humana == "tesoura":
+#         if escolha_maquina == "pedra":
+#             vencedor_jogo = "VOCÊ PERDEU QUE PENA"
+#         elif escolha_maquina == "tesoura":
+#             vencedor_jogo = "EMPATE"
+#         else:
+#             vencedor_jogo = "VOCÊ GANHOU PARABÉNS"
+#     elif escolha_humana == "papel":
+#         if escolha_maquina == "pedra":
+#             vencedor_jogo = "VOCÊ GANHOU PARABÉNS"
+#         elif escolha_maquina == "tesoura":
+#             vencedor_jogo = "VOCÊ PERDEU QUE PENA"
+#         else:
+#             vencedor_jogo = "EMPATE"
+#     else:
+#         vencedor_jogo = "ERROR NA SUA. ESCOLHA DIGITE NOVAMENTE"
+
+#     return vencedor_jogo
+
+lista_jogadores = []
+
+def vencedor (escolha_humana : str , escolha_maquina : str ):
+    if escolha_humana == escolha_maquina:
+        vencedor_jogo = "EMPATE"
+    elif (escolha_humana == "tesoura" and escolha_maquina == "papel") or (escolha_humana == "papel" and escolha_maquina == "pedra") or (escolha_humana == "pedra" and escolha_maquina == "tesoura"):
+        vencedor_jogo = "VOCÊ GANHOU PARABÉNS"
+    else:
+        vencedor_jogo = "VOCÊ PERDEU QUE PENA"
+     
+    return vencedor_jogo
+
+contador_humano = 0
+contador_maquina = 0
+contador_empates = 0
+contador_pontos = 0
+
+while True:
+    while True:
+        nome_jogador = str(input("Qual é o seu nome ? ")).strip()
+
+        lista_maquina = ["pedra","papel","tesoura"]
+
+        your_choice = ""
+
+        machine_choice = random.choice(lista_maquina)
+
+        while your_choice not in ("pedra","papel","tesoura"):
+            your_choice = str(input("Qual é a sua escolha pedra/papel/tesoura ? ")).lower().strip()
+
+        print(f"""
+                RESULTADO = {vencedor(your_choice, machine_choice)}
+                SUA ESCOLHA = {your_choice}
+                ESCOLHA DA MÁQUINA = {machine_choice}
+        """)
+
+        if vencedor(your_choice, machine_choice) == "VOCÊ GANHOU PARABÉNS":
+            contador_humano += 1
+            contador_pontos += 10
+
+        elif vencedor(your_choice, machine_choice) == "VOCÊ PERDEU QUE PENA":
+            contador_maquina += 1
+            contador_pontos -= 5
+        else:
+            contador_empates += 1
+
+        decisao = str(input("Você deseja continuar do programa (s/n) ? ")).lower().strip()
+
+        if decisao == "s":
+            continue
+        elif decisao == "n":
+            print(f"""
+            Resultado final -> {contador_humano} vitórias | {contador_maquina}  derrotas | {contador_empates} empates
+            """)
+            lista_jogadores.append({"Nome" : nome_jogador,"Pontuação" : contador_pontos})
+            break
+        else:
+            print("error na decisão de saída")
+
+    decisao2 = str(input("Você deseja ver os jogadores (s/n) para dar o break escreva parar ? ")).lower().strip()
+
+    if decisao2 == "s":
+        print(lista_jogadores)
+    elif decisao2 == "n":
+        continue
+    elif decisao2 == "parar":
+        break
+    else:
+        print("error na decisão de saída")
